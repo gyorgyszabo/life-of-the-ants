@@ -1,0 +1,83 @@
+@startuml
+
+'https://plantuml.com/class-diagram
+
+Ant <|-- Queen
+Ant <|-- Worker
+Ant <|-- Soldier
+Ant <|-- Drone
+Colony *-- Ant
+
+abstract class Ant {
+#COLONY : Colony
+#POSITION : Position
+{static} #RANDOM : Random
++Ant(Colony, Position)
+{abstract} +move() : void
++getPosition() : Position
+}
+
+class Queen {
+-matingCounter : int
++Queen(Colony, Position)
++move() : void
++isMating() : boolean
++getMatingCounter() : int
+}
+
+class Worker {
++Worker(Colony, Position)
++move() : void
+}
+
+class Soldier {
+-lastDirection : Direction
++Soldier(Colony, Position)
++move() : void
+}
+
+class Drone {
+-QUEEN_POSITION : Position
+-stayingStepsLeft : int
++Drone(Colony, Position)
++move() : void
+}
+
+enum Direction {
+NORTH
+EAST
+SOUTH
+WEST
++Direction(int moveX, int moveY)
++getMoveX() : int
++getMoveY() : int
+{static} +getDirectionById(int) : Direction
+{static} +getNextDirectionLeft(Direction) : Direction
+}
+
+class Position {
+-x : int
+-y : int
++Position(int x, int y)
++getX() : int
++setX() : void
++getY() : int
++setY() : void
+}
+
+class Colony {
+-WIDTH : int
+-QUEEN : Queen
+-ANTS : ArrayList
+{static} -RANDOM : Random
++Colony(int width)
++generateAnts(int workers, int soldiers, int drones) : void
+-randomStartingPosition() : int
++update() : void
++display() : void
+-createMap() : char[][]
++getWidth() : int
++getQueen() : Queen
+}
+
+@enduml
